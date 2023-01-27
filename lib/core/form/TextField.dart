@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:schedule_app_fe/core/providers/api.provider.dart';
@@ -15,6 +16,7 @@ class TextFieldC extends StatelessWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final dynamic context;
+
   const TextFieldC({
     super.key,
     required this.controller,
@@ -52,42 +54,39 @@ class TextFieldC extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ApiProvider>(
-      builder: (context, value, child) {
-        final String error = value.errorDetails[name] ?? '';
-        return Column(
-          children: [
-            TextField(
-              controller: controller,
-              obscureText: isPassword,
-              keyboardType: keyBoardType,
-              decoration: InputDecoration(
-                border: const UnderlineInputBorder(),
-                labelText: label,
-                hintText: hintText,
-                prefixIcon: suffixIcon,
-                suffixIcon: keyBoardType == TextInputType.datetime
-                    ? GestureDetector(
-                        onTap: _presentDatePicker,
-                        child: prefixIcon ??
-                            const Icon(Icons.calendar_today_rounded),
-                      )
-                    : prefixIcon,
-              ),
-            ),
-            error != '' ? const SizedBox(height: 10) : const SizedBox.shrink(),
-            error != ''
-                ? Align(
-                    alignment: Alignment.topLeft,
-                    child: Text(
-                      error,
-                      style: const TextStyle(color: Colors.red),
-                    ),
+    final ApiProvider apiController = Get.find();
+    final String error = apiController.errorDetails[name] ?? '';
+    return Column(
+      children: [
+        TextField(
+          controller: controller,
+          obscureText: isPassword,
+          keyboardType: keyBoardType,
+          decoration: InputDecoration(
+            border: const UnderlineInputBorder(),
+            labelText: label,
+            hintText: hintText,
+            prefixIcon: suffixIcon,
+            suffixIcon: keyBoardType == TextInputType.datetime
+                ? GestureDetector(
+                    onTap: _presentDatePicker,
+                    child:
+                        prefixIcon ?? const Icon(Icons.calendar_today_rounded),
                   )
-                : const SizedBox.shrink()
-          ],
-        );
-      },
+                : prefixIcon,
+          ),
+        ),
+        error != '' ? const SizedBox(height: 10) : const SizedBox.shrink(),
+        error != ''
+            ? Align(
+                alignment: Alignment.topLeft,
+                child: Text(
+                  error,
+                  style: const TextStyle(color: Colors.red),
+                ),
+              )
+            : const SizedBox.shrink()
+      ],
     );
   }
 }

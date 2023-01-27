@@ -1,33 +1,44 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:schedule_app_fe/core/api/auth.api.dart';
 import 'package:schedule_app_fe/core/models/user.dart';
 
 final defaultUser =
     User(email: '', id: '', name: '', password: '', username: '');
 
-class UserProvider extends ChangeNotifier {
-  final AuthApi _authApi;
+class UserProvider extends GetxController {
+  final AuthApi _authApi = Get.find();
+
+  final _googleSignIn = GoogleSignIn();
+  var googleAccount = Rx<GoogleSignInAccount?>(null);
 
   User currentUser = defaultUser;
-  bool isLogin = false;
-
-  UserProvider(this._authApi);
+  RxBool isLogin = false.obs;
 
   set setIsLogin(bool isLogin) {
-    this.isLogin = isLogin;
-    notifyListeners();
+    // this.isLogin.value = isLogin;
+    update();
   }
 
   void resetData() {
     currentUser = defaultUser;
-    isLogin = false;
-    notifyListeners();
+    isLogin.value = false;
+    update();
   }
 
-  Future<User> getCurrentUser() async {
+  login() async {
+    googleAccount.value = await _googleSignIn.signIn();
+    // setIsLogin = true;
+    update();
+  }
+
+  Future<User?> getCurrentUser() async {
     var res = await _authApi.getCurrentUser();
+
+    if (res == null) return null;
+
     var resUser = json.decode(res.toString());
     var newUser = User(
         email: resUser['email'],
@@ -37,8 +48,8 @@ class UserProvider extends ChangeNotifier {
         username: resUser['username']);
 
     currentUser = newUser;
-    isLogin = true;
-    notifyListeners();
+    // isLogin.value = true;
+    update();
     return newUser;
   }
 }

@@ -1,10 +1,10 @@
 import 'dart:convert';
 
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/api/config.dart' show ApiClient;
 
 class AuthApi {
-  final ApiClient _apiClient;
-  AuthApi(ApiClient apiClient) : _apiClient = apiClient;
+  final ApiClient _apiClient = Get.find();
 
   Future<dynamic> login(String username, String password) async {
     try {

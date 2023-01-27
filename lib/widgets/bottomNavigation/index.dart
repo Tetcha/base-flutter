@@ -4,8 +4,11 @@ class CBottomNavigationBar extends StatelessWidget {
   final int currentIndex;
   final Function(int) onChangeTab;
 
-  const CBottomNavigationBar(
-      {super.key, required this.currentIndex, required this.onChangeTab});
+  const CBottomNavigationBar({
+    super.key,
+    required this.currentIndex,
+    required this.onChangeTab,
+  });
 
   @override
   Widget build(BuildContext context) {

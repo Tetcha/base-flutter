@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/api/user.api.dart';
 import 'package:schedule_app_fe/core/form/TextField.dart';
-import 'package:schedule_app_fe/core/injection/index.dart';
 import 'package:schedule_app_fe/core/providers/user.provider.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -13,8 +13,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  final UserProvider _userProvider = getIt<UserProvider>();
-  final UserApi _userApi = getIt<UserApi>();
+  final UserProvider _userProvider = Get.find();
+  final UserApi _userApi = Get.find();
 
   late final TextEditingController _usernameController;
   late final TextEditingController _emailController;
@@ -60,7 +60,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: CircleAvatar(
                 radius: 70,
                 backgroundImage: NetworkImage(
-                    "https://scontent.fsgn13-4.fna.fbcdn.net/v/t1.6435-1/205956104_2751433955079159_2840020984542922686_n.jpg?stp=dst-jpg_p320x320&_nc_cat=107&ccb=1-7&_nc_sid=7206a8&_nc_ohc=hBFCrjSeb58AX_o6vnY&_nc_ht=scontent.fsgn13-4.fna&oh=00_AT-l2kiDBscqzhT_ldEmZqxmy4PxuNA9ZcEdBKKQ-HsZ-A&oe=635A5F58")),
+                    "https://scontent.fdad1-2.fna.fbcdn.net/v/t39.30808-6/327355793_1200959854127665_8952550993713958891_n.jpg?_nc_cat=1&ccb=1-7&_nc_sid=5cd70e&_nc_ohc=SOBQSRpIR1sAX-DMQSO&tn=9gpgzQ2CPB2YsPSN&_nc_ht=scontent.fdad1-2.fna&oh=00_AfDE1jriHv9IjhQF2enIWvAfHmdMtgGvxFPxL41lRn-kCg&oe=63D5C650")),
           ),
         ),
         Container(

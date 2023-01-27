@@ -1,12 +1,13 @@
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/constants/store.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPreferenceHelper {
+class SharedPreferenceProvider extends GetxController {
   // shared pref instance
   final SharedPreferences _sharedPreference;
 
   // constructor
-  SharedPreferenceHelper(this._sharedPreference);
+  SharedPreferenceProvider(this._sharedPreference);
 
   SharedPreferences get instance => _sharedPreference;
 

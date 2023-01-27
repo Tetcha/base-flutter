@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart' show ChangeNotifier;
+import 'package:get/get.dart';
 
-class ApiProvider extends ChangeNotifier {
+class ApiProvider extends GetxController {
   bool isGlobalLoading = false;
   bool isLocalLoading = false;
-  String test = 'test message';
   Map<String, String> errorDetails = {};
   bool isError = false;
   String? message;
@@ -11,22 +10,22 @@ class ApiProvider extends ChangeNotifier {
 
   set setGlobalLoading(bool value) {
     isGlobalLoading = value;
-    notifyListeners();
+    update();
   }
 
   set setLocalLoading(bool value) {
     isLocalLoading = value;
-    notifyListeners();
+    update();
   }
 
   void clearErrorDetails() {
     errorDetails = {};
-    notifyListeners();
+    update();
   }
 
   void setErrorDetails(Map<String, String> data) {
     errorDetails = data;
-    notifyListeners();
+    update();
   }
 
   String? getErrorByField(String field) {

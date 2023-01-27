@@ -1,11 +1,11 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' hide Response;
 import 'package:schedule_app_fe/core/api/config.dart' show ApiClient;
 
 class UserApi {
-  final ApiClient _apiClient;
-  UserApi(ApiClient apiClient) : _apiClient = apiClient;
+  final ApiClient _apiClient = Get.find();
 
   Future<Response<dynamic>?> updateUser(
       {String? username, String? email, String? name}) async {

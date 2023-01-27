@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/providers/user.provider.dart';
 import 'package:schedule_app_fe/screens/profile.dart';
 import 'package:schedule_app_fe/widgets/bottomNavigation/index.dart';
@@ -16,10 +16,6 @@ class MainLayout extends StatefulWidget {
 class _MainLayoutState extends State<MainLayout> {
   int _currentIndex = 0;
 
-  List<Widget> widgetList = <Widget>[
-    ProfileScreen(),
-  ];
-
   void _onChangeTab(int index) {
     setState(() {
       _currentIndex = index;
@@ -28,18 +24,17 @@ class _MainLayoutState extends State<MainLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, value, child) => Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: AppBar(
-          title: const Text('Schedule App'),
-        ),
-        body: widget.children,
-        bottomNavigationBar: value.isLogin
-            ? CBottomNavigationBar(
-                currentIndex: _currentIndex, onChangeTab: _onChangeTab)
-            : null,
+    final UserProvider userController = Get.find();
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        title: const Text('Schedule App'),
       ),
+      body: widget.children,
+      bottomNavigationBar: userController.isLogin.value
+          ? CBottomNavigationBar(
+              currentIndex: _currentIndex, onChangeTab: _onChangeTab)
+          : const SizedBox(),
     );
   }
 }

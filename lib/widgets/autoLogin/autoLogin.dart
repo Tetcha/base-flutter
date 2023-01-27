@@ -1,6 +1,5 @@
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:provider/provider.dart';
-import 'package:schedule_app_fe/core/injection/index.dart';
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/providers/user.provider.dart';
 import 'package:schedule_app_fe/screens/login.dart';
 
@@ -14,7 +13,7 @@ class AutoLogin extends StatefulWidget {
 }
 
 class _AutoLoginState extends State<AutoLogin> {
-  final UserProvider _userProvider = getIt<UserProvider>();
+  final UserProvider _userProvider = Get.find();
 
   @override
   initState() {
@@ -25,10 +24,7 @@ class _AutoLoginState extends State<AutoLogin> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<UserProvider>(
-      builder: (context, value, child) {
-        return value.isLogin ? widget.children : const LoginScreen();
-      },
-    );
+    return Obx((() =>
+        _userProvider.isLogin.value ? widget.children : const LoginScreen()));
   }
 }

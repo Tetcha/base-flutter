@@ -1,32 +1,21 @@
-import 'package:get_it/get_it.dart' show GetIt;
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/api/auth.api.dart';
 import 'package:schedule_app_fe/core/api/config.dart';
 import 'package:schedule_app_fe/core/api/user.api.dart';
 import 'package:schedule_app_fe/core/providers/api.provider.dart';
 import 'package:schedule_app_fe/core/providers/ui.provider.dart';
 import 'package:schedule_app_fe/core/providers/user.provider.dart';
-import 'package:schedule_app_fe/util/date.dart';
-import 'package:schedule_app_fe/util/route.dart';
-import 'package:schedule_app_fe/util/sharePreferenceHelper.dart';
+import 'package:schedule_app_fe/core/providers/sharePreference.provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final getIt = GetIt.instance;
-
+// config global dependencies
 Future<void> configureDependencies() async {
-  getIt.registerSingleton<DateUtil>(DateUtil());
-  getIt.registerSingleton<ApiProvider>(ApiProvider());
-  getIt.registerSingleton<UiProvider>(UiProvider());
-  getIt.registerSingleton<PageNavigator>(PageNavigator());
-
+  Get.put(ApiProvider());
+  Get.put(UIProvider());
+  Get.put(SharedPreferenceProvider(await SharedPreferences.getInstance()));
   // depend singleton
-  getIt.registerSingleton<SharedPreferenceHelper>(
-      SharedPreferenceHelper(await SharedPreferences.getInstance()));
-
-  getIt.registerSingleton<ApiClient>(
-      ApiClient(getIt<ApiProvider>(), getIt<UiProvider>()));
-
-  getIt.registerSingleton<AuthApi>(AuthApi(getIt<ApiClient>()));
-  getIt.registerSingleton<UserApi>(UserApi(getIt<ApiClient>()));
-
-  getIt.registerSingleton<UserProvider>(UserProvider(getIt<AuthApi>()));
+  Get.put(ApiClient());
+  Get.put(AuthApi());
+  Get.put(UserApi());
+  Get.put(UserProvider());
 }

@@ -1,13 +1,11 @@
-import 'dart:convert';
+import 'package:get/get.dart';
 
-import 'package:flutter/cupertino.dart';
-
-class UiProvider extends ChangeNotifier {
+class UIProvider extends GetxController {
   bool isLoading = false;
   String title = 'Schedule App';
 
   set setIsLoading(bool isLogin) {
     isLoading = isLogin;
-    notifyListeners();
+    update();
   }
 }

@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/api/auth.api.dart';
 import 'package:schedule_app_fe/core/form/TextField.dart';
 import 'package:schedule_app_fe/core/injection/index.dart';
 
 class RegisterScreen extends StatelessWidget {
   RegisterScreen({super.key});
-  final AuthApi _authApi = getIt<AuthApi>();
+  final AuthApi _authApi = Get.find();
   final TextEditingController _nameController =
       TextEditingController(text: 'admin');
   final TextEditingController _emailController =

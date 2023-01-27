@@ -1,14 +1,10 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:schedule_app_fe/core/api/auth.api.dart';
+import 'package:get/get.dart';
 import 'package:schedule_app_fe/core/form/ErrorMessage.dart';
 import 'package:schedule_app_fe/core/form/TextField.dart';
-import 'package:schedule_app_fe/core/injection/index.dart';
 import 'package:schedule_app_fe/core/providers/user.provider.dart';
 import 'package:schedule_app_fe/screens/register.dart';
 import 'package:schedule_app_fe/util/route.dart';
-import 'package:schedule_app_fe/util/sharePreferenceHelper.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,8 +14,7 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final AuthApi _authApi = getIt<AuthApi>();
-  final UserProvider _userProvider = getIt<UserProvider>();
+  final UserProvider _userProvider = Get.find();
 
   final TextEditingController _usernameController =
       TextEditingController(text: '');
@@ -29,21 +24,10 @@ class _LoginScreenState extends State<LoginScreen> {
   void _onSubmit() async {
     // just auto set for demo
     _userProvider.setIsLogin = true;
+  }
 
-    // uncomment this to apply login api
-    // var response = await _authApi.login(
-    //     _usernameController.text, _passwordController.text);
-    // if (response != null) {
-    //   var token = json.decode(response.toString())?["token"] as String;
-
-    //   // save auth token to preference
-    //   final SharedPreferenceHelper preferenceHelper =
-    //       getIt<SharedPreferenceHelper>();
-    //   preferenceHelper.saveAuthToken(token);
-
-    //   _userProvider.setIsLogin = true;
-    //   _userProvider.getCurrentUser();
-    // }
+  void _onGoogleSignIn() {
+    _userProvider.login();
   }
 
   @override
@@ -58,6 +42,9 @@ class _LoginScreenState extends State<LoginScreen> {
               size: 80,
             ),
           ),
+          ElevatedButton(
+              onPressed: _onGoogleSignIn,
+              child: const Text("Login with Googlee")),
           Flexible(
             child: Container(
               padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
